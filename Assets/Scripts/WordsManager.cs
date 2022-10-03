@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,6 @@ public class WordsManager : MonoBehaviour
     public List<Word> words;
     public Spawner spawner;
     public ChangeEmotion slider;
-    public CollisionDetection detect;
 
     private bool isWordActive;
     private Word WordActive;
@@ -17,19 +17,22 @@ public class WordsManager : MonoBehaviour
 
     private void Start()
     {
-        //checkDetect = detect.returnBool();
-        //if (checkDetect)
-        //{
-        //    words.Remove(WordActive);
-        //    isWordActive = false;
-        //    checkDetect = false;
-        //    detect.SetCheck(false);
-        //}
+        GameInstance.deleteWords += deleteWords;
+    }
+
+    private void deleteWords(Word obj)
+    {
+        isWordActive = false;
+        words.Remove(obj);
+        
     }
 
     public void AddWords()
     {
-        Word word = new Word(WordsGenerator.RandomWord(), spawner.SpawnWords());
+        var obj = spawner.SpawnWords();
+        DisplayWords wdp = obj.GetComponent<DisplayWords>();
+        Word word = new Word(WordsGenerator.RandomWord(), wdp);
+        obj.GetComponent<CollisionDetection>().word = word;
         Debug.Log(word.word);
         word.addValue = slider;
         
@@ -72,11 +75,4 @@ public class WordsManager : MonoBehaviour
             words.Remove(WordActive);
         }
     }
-
-    public Word GetWordActive()
-    {
-        Debug.Log(WordActive);
-        return WordActive;
-    }
-
 }

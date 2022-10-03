@@ -7,4 +7,5 @@ public class GameInstance : MonoBehaviour
 {
     public static Action<int> addValueSlider;
     public static Action<int> decreaseValueSlider;
+    public static Action<Word> deleteWords;
 }

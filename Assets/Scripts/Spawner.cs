@@ -8,13 +8,13 @@ public class Spawner : MonoBehaviour
     public GameObject Prefab;
     public Transform canvas;
 
-    public DisplayWords SpawnWords()
+    public GameObject SpawnWords()
     {
-        Vector3 randomPos = new Vector3(900f, Random.Range(20f, 300f));
+        Vector3 randomPos = new Vector3(900f, Random.Range(88f, 488f));
 
         GameObject obj = Instantiate(Prefab,randomPos, Quaternion.identity, canvas);
-        DisplayWords wdp = obj.GetComponent<DisplayWords>();
+        obj.GetComponent<CollisionDetection>();
 
-        return wdp;
+        return obj;
     }
 }
